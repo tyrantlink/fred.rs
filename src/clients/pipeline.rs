@@ -203,6 +203,10 @@ impl<C: ClientLike> Pipeline<C> {
     send_all(self.client.inner(), commands).await?.convert()
   }
 
+  pub fn get_commands(&self) -> VecDeque<Command> {
+    clone_buffered_commands(&self.commands)
+  }
+
   /// Send the pipeline and respond with each individual result.
   ///
   /// Note: use `Value` as the return type (and [convert](crate::types::Value::convert) as needed) to
